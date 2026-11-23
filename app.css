@@ -408,3 +408,5 @@ body.adm-page{overflow:auto}
 .sticky>.col{flex:none;white-space:nowrap}
 .sticky .btn{width:auto;min-width:0}
 .btn.grow{flex:1;width:auto;min-width:0}
+
+.scroll.fit{overflow:hidden}

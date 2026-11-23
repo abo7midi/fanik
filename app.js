@@ -146,17 +146,17 @@ onboarding(){ const sl=[['img/onb1.jpg','كل خدمات منزلك في مكا�
     tr.addEventListener('scroll',()=>set(Math.min(ss.length-1,Math.round(Math.abs(tr.scrollLeft)/tr.clientWidth))),{passive:true});
     nx.onclick=()=>{ if(c<ss.length-1) tr.scrollTo({left:-(c+1)*tr.clientWidth,behavior:'smooth'}); else { S.session.onb=true; go('login'); } }; }}; },
 
-login(p){ return {html:`<span class="deco" style="width:1000px;height:1000px;left:-280px;top:580px"></span><span class="deco" style="width:760px;height:760px;left:-160px;top:700px"></span><span class="deco" style="width:520px;height:520px;left:-40px;top:820px"></span>
+login(p){ return {cls:'fit',html:`<span class="deco" style="width:1000px;height:1000px;left:-280px;top:580px"></span><span class="deco" style="width:760px;height:760px;left:-160px;top:700px"></span><span class="deco" style="width:520px;height:520px;left:-40px;top:820px"></span>
   <div style="display:flex;justify-content:center;margin-top:34px"><div id="lg" class="pop" style="width:150px;color:var(--t2)"></div></div>
   <div class="col g16" style="margin-top:40px;position:relative">
    <h1 class="t32 c1${R(1)}">مرحباً بك</h1><p class="t16 c2${R(2)}" style="margin-top:-8px">سجّل دخولك برقم جوالك للمتابعة</p>
    <div class="col g8${R(3)}" style="padding-top:16px"><label class="t15 w5 c1" for="ph">رقم الجوال</label>
-    <div class="inp" id="pf">${ic('phone',22,'c3')}<input id="ph" inputmode="numeric" maxlength="9" placeholder="5X XXX XXXX" dir="ltr" style="text-align:right" autocomplete="tel-national"><span style="width:1px;height:28px;background:var(--bd)"></span><span class="t15 w5 num">+966</span></div>
+    <div class="inp" id="pf">${ic('phone',22,'c3')}<input id="ph" inputmode="numeric" maxlength="14" placeholder="5X XXX XXXX" dir="ltr" style="text-align:right" autocomplete="tel-national"><span style="width:1px;height:28px;background:var(--bd)"></span><span class="t15 w5 num">+966</span></div>
     <div class="t13 c3" id="pe">سنرسل لك رمز تحقق في رسالة نصية</div></div></div>
   <div class="actions"><button class="btn pri" id="go" disabled>متابعة</button><p class="t13 c3 ct">بالمتابعة، أنت توافق على <span class="cb">الشروط والأحكام</span> و<span class="cb">سياسة الخصوصية</span></p></div>`,
   mount(el){ logo().then(s=>{ const l=$('#lg',el); if(l) l.innerHTML=s; }); const ph=$('#ph',el), b=$('#go',el), pf=$('#pf',el), pe=$('#pe',el);
-    ph.oninput=()=>{ ph.value=ph.value.replace(/\D/g,''); b.disabled=ph.value.length<9; pf.classList.remove('err'); pe.className='t13 c3'; pe.textContent='سنرسل لك رمز تحقق في رسالة نصية'; };
-    b.onclick=()=>{ if(!/^5\d{8}$/.test(ph.value)){ pf.classList.remove('err'); void pf.offsetWidth; pf.classList.add('err'); pe.className='t13 cerr'; pe.textContent='رقم الجوال غير صحيح. يجب أن يبدأ بـ 5 ويتكوّن من 9 أرقام'; return; } b.innerHTML='<span class="spin"></span>'; setTimeout(()=>go('otp',{ph:ph.value}),700); }; }}; },
+    ph.oninput=()=>{ ph.value=ph.value.replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/\D/g,''); b.disabled=nrm(ph.value).length<9; pf.classList.remove('err'); pe.className='t13 c3'; pe.textContent='سنرسل لك رمز تحقق في رسالة نصية'; };
+    const nrm=v=>v.replace(/^00/,'').replace(/^966/,'').replace(/^0/,''); b.onclick=()=>{ const n=nrm(ph.value); if(!/^5\d{8}$/.test(n)){ pf.classList.remove('err'); void pf.offsetWidth; pf.classList.add('err'); pe.className='t13 cerr'; pe.textContent='رقم الجوال غير صحيح. يجب أن يبدأ بـ 5 ويتكوّن من 9 أرقام'; return; } b.innerHTML='<span class="spin"></span>'; setTimeout(()=>go('otp',{ph:n}),700); }; }}; },
 
 otp(p){ const ph=p.ph||'501234567'; const locked=S.lockUntil>Date.now(); return {html:`<div class="hdr" style="justify-content:flex-start"><button class="ibtn" data-back aria-label="رجوع">${ic('chevR',22)}</button></div>
   <div class="col g16" style="margin-top:8px"><div class="ib pop" style="width:64px;height:64px;border-radius:20px;background:var(--b100);color:var(--b700)">${ic(locked?'lock':'msg',28)}</div>
@@ -182,7 +182,7 @@ otp(p){ const ph=p.ph||'501234567'; const locked=S.lockUntil>Date.now(); return 
         S.otpTries=0; S.session.in=true; S.session.onb=true; S.user.phone='0'+ph; const first=!S.session.named; save(); if(first) go('welcome',{},'replace'); else { S.session.loaded=false; go('home',{},'tab'); } },800); };
     setTimeout(()=>ins[0].focus({preventScroll:true}),450); }}; },
 
-welcome(){ return {html:`<span class="deco" style="width:760px;height:760px;left:-160px;top:700px"></span>
+welcome(){ return {cls:'fit',html:`<span class="deco" style="width:760px;height:760px;left:-160px;top:700px"></span>
   <div style="display:flex;justify-content:center;margin-top:34px"><div id="lg" class="pop" style="width:150px;color:var(--t2)"></div></div>
   <div class="col g16" style="margin-top:40px"><h1 class="t32 c1${R(1)}">أهلاً بك في فنيك</h1><p class="t16 c2${R(2)}" style="margin-top:-8px">أكمل بياناتك لنخدمك بشكل أفضل</p>
    <div class="col g8${R(3)}" style="padding-top:16px"><label class="t15 w5 c1" for="nm">الاسم الكامل</label><div class="inp">${ic('user',22,'c3')}<input id="nm" placeholder="اكتب اسمك الكامل" autocomplete="name"></div><div class="t13 c3">يظهر اسمك للفني عند تأكيد الطلب</div></div></div>
@@ -268,8 +268,8 @@ request(p){ const s=svc(p.id); const st=(cur&&cur.top.name==='request'&&cur.st&&
     $$('#pays .opt',el).forEach(b=>b.onclick=()=>{ if(b.dataset.k==='card'&&!card0()){ go('addcard'); return; } st.pay=b.dataset.k; $$('#pays .opt',el).forEach(o=>o.classList.toggle('on',o===b)); sum(); });
     const drawCp=()=>{ const c=$('#cp',el);
       if(st.codeState===1) c.innerHTML=`<div class="row g12 slide" style="height:56px;padding:0 16px 0 12px;border-radius:12px;background:var(--ok-bg);border:1px solid var(--ok)">${ic('tag',20,'cok')}<span class="grow col"><span class="t15 w5 num" style="direction:inherit">${st.code}</span><span class="t13 cok">تم تطبيق كود الخصم</span></span>${money('-300','t15 w5 cok',15)}<button class="c3" id="cr" aria-label="إزالة">${ic('x',18)}</button></div>`;
-      else c.innerHTML=`<div class="row g12 ${st.codeState===2?'slide':''}" style="height:56px;padding:0 16px 0 12px;border-radius:12px;background:${st.codeState===2?'var(--err-bg)':'var(--canvas)'};border:1px solid ${st.codeState===2?'var(--err)':'var(--bd)'}">${ic('tag',20,st.codeState===2?'cerr':'c3')}<span class="grow col"><input id="ci" value="${esc(st.code)}" placeholder="أدخل كود الخصم" dir="ltr" style="text-align:right;text-transform:uppercase;height:28px" class="t15 w5">${st.codeState===2?'<span class="t13 cerr">الكود غير صالح أو منتهي الصلاحية</span>':''}</span><button class="t15 w5 cb" id="ca">تطبيق</button></div>${st.codeState!==2?'<p class="t13 c3">للتجربة: XD34GG</p>':''}`;
-      const ca=$('#ca',el); if(ca) ca.onclick=()=>{ st.code=$('#ci',el).value.trim().toUpperCase(); st.codeState=st.code==='XD34GG'?1:2; drawCp(); sum(); if(st.codeState===1) toast('تم تطبيق كود الخصم'); };
+      else c.innerHTML=`<div class="row g12 ${st.codeState===2?'slide':''}" style="height:56px;padding:0 16px 0 12px;border-radius:12px;background:${st.codeState===2?'var(--err-bg)':'var(--canvas)'};border:1px solid ${st.codeState===2?'var(--err)':'var(--bd)'}">${ic('tag',20,st.codeState===2?'cerr':'c3')}<span class="grow col"><input id="ci" value="${esc(st.code)}" placeholder="أدخل كود الخصم" dir="rtl" style="text-align:right;text-transform:uppercase;height:28px" class="t15 w5">${st.codeState===2?'<span class="t13 cerr">الكود غير صالح أو منتهي الصلاحية</span>':''}</span><button class="t15 w5 cb" id="ca">تطبيق</button></div>${st.codeState!==2?'<p class="t13 c3">للتجربة: خصم</p>':''}`;
+      const ca=$('#ca',el); if(ca) ca.onclick=()=>{ st.code=$('#ci',el).value.trim().toUpperCase(); st.codeState=st.code.replace(/\s/g,'')==='خصم'?1:2; drawCp(); sum(); if(st.codeState===1) toast('تم تطبيق كود الخصم'); };
       const cr=$('#cr',el); if(cr) cr.onclick=()=>{ st.code=''; st.codeState=0; drawCp(); sum(); }; }; drawCp();
     const lt=$('#lt',el); $('#loy',el).onclick=()=>{ st.loy=!st.loy; lt.classList.toggle('on',st.loy); sum(); };
     $('#nt',el).oninput=e=>st.notes=e.target.value;
