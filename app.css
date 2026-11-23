@@ -1,3 +1,7 @@
+@font-face{font-family:'Montserrat Arabic';src:url(fonts/MontserratArabic-Regular.woff) format('woff');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Montserrat Arabic';src:url(fonts/MontserratArabic-Medium.woff) format('woff');font-weight:500;font-style:normal;font-display:swap}
+@font-face{font-family:'Montserrat Arabic';src:url(fonts/MontserratArabic-SemiBold.woff) format('woff');font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:'Montserrat Arabic';src:url(fonts/MontserratArabic-Bold.woff) format('woff');font-weight:700;font-style:normal;font-display:swap}
 /* Fanik Jahiz — customer app. Tokens = Figma "Fanik v2" variables (Light / Dark). Device = iPhone 17 Pro Max 440×956 pt. */
 :root{
   --canvas:#faf8f3; --surface:#ffffff; --subtle:#f4efe4; --brand-soft:#fbf7ee;
@@ -9,7 +13,7 @@
   --warn-t:#b54708; --warn-bg:#fffaeb; --info-t:#175cd3; --info-bg:#eff8ff;
   --glass1:rgba(255,255,255,.7); --glass2:rgba(255,255,255,.5); --glass-bd:rgba(255,255,255,.85); --navic:#6b6f78;
   --scrim:rgba(23,18,8,.45); --stage:#ede6d6; --stage2:#e2d7bf; --fade:250,248,243;
-  --font:"IBM Plex Sans Arabic",system-ui,Tahoma,sans-serif;
+  --font:"Montserrat Arabic",system-ui,Tahoma,sans-serif;
   --ease:cubic-bezier(.22,.8,.24,1); --spring:cubic-bezier(.34,1.56,.64,1); --fs:1;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
@@ -416,3 +420,7 @@ input:focus-visible,textarea:focus-visible,select:focus-visible{outline:none}
 .inp:not(.err):focus-within,.fx:not([style*="--err)"]):focus-within,.ta:focus,.dg:focus:not([style*="--err)"]){border-color:var(--b700)!important;box-shadow:0 0 0 4px color-mix(in srgb,var(--b500) 16%,transparent)}
 .ta{transition:border-color .25s,box-shadow .25s}.fx{transition:border-color .25s,box-shadow .25s}
 .adm-in:focus,.adm input:focus{border-color:var(--b700)!important}
+/* Montserrat Arabic is wider: keep single lines as in Figma */
+.bslide .copy{width:auto;max-width:300px}
+.bslide .copy>.t21{white-space:nowrap}
+.cat>*:not(.tile){white-space:nowrap}
