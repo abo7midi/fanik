@@ -1,5 +1,5 @@
 /* Fanik Jahiz — offline cache (app shell + assets) */
-const V='fanik-v2-2';
+const V='fanik-v2-3';
 const SHELL=['./','index.html','app.css','app.js','icons.js','logo.svg','manifest.webmanifest','img/onb1.jpg','img/onb2.jpg','img/onb3.jpg','img/onb4.jpg','img/banner.jpg','img/offer2.jpg','img/clean.jpg','img/avatar.jpg','img/cat-install.png','img/cat-ac.png','img/cat-plumb.png','img/cat-clean.png','img/cat-pest.png','icons/icon-192.png'];
 self.addEventListener('install',e=>{ e.waitUntil(caches.open(V).then(c=>c.addAll(SHELL)).then(()=>self.skipWaiting())); });
 self.addEventListener('activate',e=>{ e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==V).map(k=>caches.delete(k)))).then(()=>self.clients.claim())); });

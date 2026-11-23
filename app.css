@@ -410,3 +410,9 @@ body.adm-page{overflow:auto}
 .btn.grow{flex:1;width:auto;min-width:0}
 
 .scroll.fit{overflow:hidden}
+
+/* active field highlight */
+input:focus-visible,textarea:focus-visible,select:focus-visible{outline:none}
+.inp:not(.err):focus-within,.fx:not([style*="--err)"]):focus-within,.ta:focus,.dg:focus:not([style*="--err)"]){border-color:var(--b700)!important;box-shadow:0 0 0 4px color-mix(in srgb,var(--b500) 16%,transparent)}
+.ta{transition:border-color .25s,box-shadow .25s}.fx{transition:border-color .25s,box-shadow .25s}
+.adm-in:focus,.adm input:focus{border-color:var(--b700)!important}
